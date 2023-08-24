@@ -1,5 +1,5 @@
 const express = require("express");
-const { BlogModel } = require("../models/blog.model"); 
+const { BlogModel } = require("../Models/Blog.model"); 
 const authMiddleware = require("../Middleware/user.middleware");
 const blog = express.Router();
 
@@ -35,5 +35,23 @@ blog.get("/api/blogs", authMiddleware, async (req, res) => {
     res.json({ msg: "Error" });
   }
 });
+
+blog.delete("/blogs/:id", authMiddleware, async (req, res) => {
+    const userId = req.user.userId;
+    const blogId = req.params.id;
+  
+    try {
+      const blogdelete = await BlogModel.findOne({ _id: blogId, userId });
+  
+      if (!blogdelete) {
+        return res.json({ msg: "Blog not found"});
+      }
+      await blogdelete.remove();
+  
+      res.json({ msg: "Blog deleted successfully" });
+    } catch (error) {
+      res.json({ msg: "Error" });
+    }
+  });
 
 module.exports = { blog };
