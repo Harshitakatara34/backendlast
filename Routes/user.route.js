@@ -23,7 +23,7 @@ route.post("/api/register", async (req, res) => {
   }
 });
 
-route.post("/api/register", async (req, res) => {
+route.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {

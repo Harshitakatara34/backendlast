@@ -10,7 +10,7 @@ blog.post("/api/blogs", authMiddleware, async (req, res) => {
   const authorId = req.user.userId; 
 
   try {
-    const blogInstance = new BlogModel({
+    const blog = new BlogModel({
       title,
       content,
       category,
@@ -18,7 +18,7 @@ blog.post("/api/blogs", authMiddleware, async (req, res) => {
       userId: authorId,
     });
 
-    const createdBlog = await blogInstance.save();
+    const createdBlog = await blog.save();
     res.json({ msg: "Blog created successfully", blog: createdBlog });
   } catch (error) {
     res.json({ msg: "Error" });
